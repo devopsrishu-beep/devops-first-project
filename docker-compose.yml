@@ -1,0 +1,29 @@
+services:
+  banaras-blog:
+    image: devopsrishu/banaras-blog:latest
+    container_name: banaras-blog
+    ports:
+      - "10000:10000"
+    restart: always
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/nginx/conf.d:/etc/nginx/conf.d
+      - /etc/letsencrypt:/etc/letsencrypt
+    restart: always
+    depends_on:
+      - banaras-blog
+  
