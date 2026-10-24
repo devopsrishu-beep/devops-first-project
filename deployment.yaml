@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banaras-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: banaras-blog
+  template:
+    metadata:
+      labels:
+        app: banaras-blog
+    spec:
+      containers:
+      - name: banaras-blog
+        image: banaras-blog:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 10000
